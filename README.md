@@ -2,11 +2,19 @@
 
 **_Service Cat_** was developed using [Express.js](https://expressjs.com/) for providing RESTful APIs with robust routing and error handling.
 
-## 1.1 Install Dependencies
+## 1.1 Install Dependencies & Configure MongoDB
+
+### 1.1.1 Install Dependencies
 
 ```
 npm install
 ```
+
+### 1.1.2 Install & Configure MongoDB
+
+- Install MongoDB on your local machine
+- Start MongoDB on your local environment
+- If you haven't changed your `HOSTNAME` and `PORT`, your local MongoDB should now be running on `mongodb://localhost:27017`
 
 ## 1.2 Configure Environment Variables
 
@@ -75,7 +83,7 @@ Response Data
 ```
 DELETE http://localhost:3000/api/sessions
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -99,7 +107,7 @@ Default endpoint for getting cat breeds when no query parameter is provided.
 ```
 GET http://localhost:3000/api/cats/topfriendliness
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -129,7 +137,7 @@ Response
 ```
 GET http://localhost:3000/api/cats/topfriendliness?limit={limit_no}
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -159,7 +167,7 @@ Response
 ```
 GET http://localhost:3000/api/cats/topfriendliness?includeSame={boolean}
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -189,7 +197,7 @@ Response
 ```
 GET http://localhost:3000/api/cats/topfriendliness?fields={field_1,field_2,...,field_n}
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -218,7 +226,7 @@ Response
 ```
 GET http://localhost:3000/api/cats/topfriendliness?childWeight={child_weight_no}&dogWeight={dog_weight_no}&strangerWeight={stranger_weight_no}
 
-Reqeust Header
+Request Header
 {
     "authorization": "ACCESS_TOKEN",
     "x-refresh": "REFRESH_TOKEN"
@@ -250,7 +258,15 @@ Response
 | 409    | Conflict (current email is already registered with another user) |
 | 500    | Internal Server Error (an unexpected error occurred)             |
 
-# 2. Deploy the Code
+# 2. Deployment Options
+
+Due to the time limitation, deployment for Service Cat has not been configured yet. However, since Service Cat is basically an Express application, it can be easily configured and deployed to the production environment. Some potential deployment options including:
+
+- **Firebase Functions**: using `App` as the argument for `onRequest()`, a full Express app can be passed to an Firebase HTTP function. More information about using existing Express apps with Firebase HTTP functions can be found [here](https://firebase.google.com/docs/functions/http-events#using_existing_express_apps).
+
+- **AWS Lambda**: similar to Firebase Functions, Express applications can also be deployed to [AWS Lambda](https://bitbucket.org/blog/deploy-an-express-js-app-to-aws-lambda-using-the-serverless-framework) using the serverless approach.
+
+- **Deploy to a Cloud VM**: Besides adopting a serverless approach for deployment of Express.js applications, the Express server can also be deployed to a cloud VM (e.g. AWS EC2, Google Compute Engine Instance, etc.) for serving client requests. CI/CD pipeline can also be configured to automate and streamline the server building and deployment processes.
 
 # 3. Project Overview
 
@@ -322,9 +338,9 @@ Some query parameters require basic validations:
 - `/api/users` & `/api/sessions` - `email`: a valid email is required for registration and sign-in (see [`user.schema.ts`](src/schema/user.schema.ts))
 - `/api/users` & `/api/sessions` - `password`: password needs to have minimum 6 characters with a combination of letters, numbers, or '-', '.', '\_' (see [`user.schema.ts`](src/schema/user.schema.ts))
 
-### 3.5.3 Passoword Hash
+### 3.5.3 Password Hash
 
-It is crucial to keep users' password secure to protect against cyber attacks. Hence, salting and hashing is applied before password being stored in the database as an extra layer of security. More detail can be found in [`user.model.ts`](src/model/user.model.ts).
+It is crucial to keep users' passwords secure to protect against cyber attacks. Hence, salting and hashing are applied before passwords being stored in the database as an extra layer of security. More detail can be found in [`user.model.ts`](src/model/user.model.ts).
 
 # 4. Project Support
 
